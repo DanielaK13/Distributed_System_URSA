@@ -76,7 +76,7 @@ O servidor/serviços suportam as seguintes operações:
 - **ListaOportunidades**: receives the post/job code and returns a list containing the opportunities for that post/job;
 - **ListaAbertas**: receives the type of opportunity (or no type, indicating all types) and return the open opportunities for that type.
 
-Observations:
+**Observations**:
 
 When servers/services receive an opportunity inclusion request, they automatically fill in field ```ingresso``` with date and time the request was received at server/service.
 

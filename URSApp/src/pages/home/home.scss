@@ -1,0 +1,22 @@
+page-home {
+
+}
+
+.selectable {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+
+.slide-title {
+	margin-top: 0rem;
+}
+
+.slide-image {
+    //max-height: 50%;
+    //max-width: 60%;
+    padding: 10%;
+    width: 75% !important;
+    height: 75% !important;
+}
