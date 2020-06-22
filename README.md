@@ -38,13 +38,13 @@ fechada: Timestamp
 
 The field ```acesso``` serves to indicate to students which courses the opportunity is valid for. URSA uses the following accesses:
 
-1 – *Somente Agronomia* (only Agronomy)
-2 – *Somente Engenharia Agronômica* (only Agronomic Engineering)
-3 – *Somente Agronogócio* (only Agribusiness)
-4 – *Agronomia ou Eng. Agronômica* (Agronomy or Agronomic Engineering)
-5 – *Agronomia ou Agronegócio* (Agronomy or Agribusiness)
-6 – *Eng. Agronômica ou Agronegócio* (Agronomic Engineering or Agribusiness)
-7 – *Todos os cursos* (all courses)
+- 1 – *Somente Agronomia* (only Agronomy)
+- 2 – *Somente Engenharia Agronômica* (only Agronomic Engineering)
+- 3 – *Somente Agronogócio* (only Agribusiness)
+- 4 – *Agronomia ou Eng. Agronômica* (Agronomy or Agronomic Engineering)
+- 5 – *Agronomia ou Agronegócio* (Agronomy or Agribusiness)
+- 6 – *Eng. Agronômica ou Agronegócio* (Agronomic Engineering or Agribusiness)
+- 7 – *Todos os cursos* (all courses)
 
 ### Post/job
 ```
@@ -57,13 +57,13 @@ tipo: Integer
 
 The field ```tipo``` serves to indicate the type of opportunity for that position. The following types used in URSA are:
 
-1 – *Emprego formal* (formal employment)
-2 – *Estágio até 20h/semana* (internship up to 20h/week)
-3 – *Estágio acima de 20h/semana* (internship above 20h/week)
-4 – *Estágio voluntário* (voluntary internship)
-5 – *Bolsa de pesquisa* (research scholarship)
-6 – *Bolsa de extensão* (extension scholarship)
-7 – *Bolsa de graduação* (graduation scholarship)
+- 1 – *Emprego formal* (formal employment)
+- 2 – *Estágio até 20h/semana* (internship up to 20h/week)
+- 3 – *Estágio acima de 20h/semana* (internship above 20h/week)
+- 4 – *Estágio voluntário* (voluntary internship)
+- 5 – *Bolsa de pesquisa* (research scholarship)
+- 6 – *Bolsa de extensão* (extension scholarship)
+- 7 – *Bolsa de graduação* (graduation scholarship)
 
 ## Sockets UPD and TCP
 
