@@ -1,101 +1,104 @@
 # URSA
 
-Este projeto é um **Sistema Distribuído** para a "Universidade Regionalizada Salvador da América (URSA)". 
+This project is a **Distributed System** for the "*Universidade Regionalizada Salvador de América* (URSA)".
 
-Este projeto permite o **envio/divulgação de oportunidades de emprego, estágio e bolsas** por parte de produtores rurais e empresas. 
+This project allows **sending job opportunities, internships and scholarships** by rural producers and companies.
 
-Foram criadas diversas aplicações com interface de comunicação para divulgar as oportunidades:
+Several applications with a communication interface were created to publicize opportunities, such as:
 
-- Receptor de oportunidades que se comunica meio de um **Socket UDP**, porta 2001;
-- Servidor de acesso ao banco de dados que aceita conexões **TCP**, porta 1972;
-- Web Services **SOAP**;
-- Web Services **Rest**;
+- Opportunity receiver that communicates through a **Socket UDP**, port 2001;
+- Database access server that accepts **TCP** connections, port 1972;
+- **SOAP** Web Services;
+- **Rest** Web Services;
 - Android **App**;
-- Integração com **Twitter**.
+- Integration with **Twitter**.
 
-## Banco de Dados
+## Database
 
-Usado para o armazenamento dos dados das oportunidades de emprego, estágio e bolsas disponibilizadas. 
+The database is used for storing job opportunities, internship and scholarship data.
 
-O código gerencia as oportunidades da seguinte forma: 
-- quando chegaram;
-- quais foram atendidas;
-- que tipos são os mais procurados.
+The code manages opportunities as follows:
+- when they arrived;
+- which ones were attended to;
+- what types are the most searched.
 
-A base de dados tem a seguinte disposição:
+The database has the following layout:
 
-### Oportunidade
+### Opportunity
 ```
-\#codigo: Integer (chave primária)
-@codcargo: Integer (chave estrangeira cargo)
+\#codigo: Integer (primary key)
+@codcargo: Integer (foreign key cargo)
 descricao: varchar(4000)
-acesso: Integer (codificado)
+acesso: Integer (encoded)
 ingresso: Timestamp
 fechada: Timestamp
 ```
 
 #### Input:
 
-O campo ```acesso``` serve para indicar para alunos de quais cursos a oportunidade é válida. Na URSA são usados os seguintes acessos (alunos dos cursos):
+The field ```acesso``` serves to indicate to students which courses the opportunity is valid for. URSA uses the following accesses:
 
-1 – Somente Agronomia
-2 – Somente Engenharia Agronomica
-3 – Somente Agronogocio
-4 – Agronomia ou Eng. Agronomica
-5 – Agronomia ou Agronegocio
-6 – Eng. Agronomica ou Agronegocio
-7 – Todos os cursos
+1 – *Somente Agronomia* (only Agronomy)
+2 – *Somente Engenharia Agronômica* (only Agronomic Engineering)
+3 – *Somente Agronogócio* (only Agribusiness)
+4 – *Agronomia ou Eng. Agronômica* (Agronomy or Agronomic Engineering)
+5 – *Agronomia ou Agronegócio* (Agronomy or Agribusiness)
+6 – *Eng. Agronômica ou Agronegócio* (Agronomic Engineering or Agribusiness)
+7 – *Todos os cursos* (all courses)
 
-### Cargo
+### Post/job
 ```
-\#codcargo: Integer (chave primária)
+\#codcargo: Integer (primary key)
 descricao: varchar (100)
 tipo: Integer
 ```
 
 #### Input
 
-O campo ```tipo``` serve para indicar o tipo da oportunidade para aquele cargo. Na URSA são usados os seguintes tipos:
+The field ```tipo``` serves to indicate the type of opportunity for that position. The following types used in URSA are:
 
-1 – Emprego formal
-2 – Estágio até 20h/semana
-3 – Estágio acima de 20h/semana
-4 – Estágio voluntário
-5 – Bolsa de pesquisa
-6 – Bolsa de extensão
-7 – Bolsa de graduação
+1 – *Emprego formal* (formal employment)
+2 – *Estágio até 20h/semana* (internship up to 20h/week)
+3 – *Estágio acima de 20h/semana* (internship above 20h/week)
+4 – *Estágio voluntário* (voluntary internship)
+5 – *Bolsa de pesquisa* (research scholarship)
+6 – *Bolsa de extensão* (extension scholarship)
+7 – *Bolsa de graduação* (graduation scholarship)
 
 ## Sockets UPD and TCP
 
 O servidor/serviços suportam as seguintes operações:
 
-- **Adiciona**: Adiciona uma oportunidade ao BD. Caso código da oportunidade já exista, não adicionar e informar um erro;
-- **Altera**: - Altera uma oportunidade ao BD. Caso código da oportunidade não exista, não alterar e informar um erro;
-- **Excluir**: apaga uma oportunidade do BD. Caso o código da oportunidade não exista no BD, retornar essa informação;
-- **Consulta**: retorna os dados de uma oportunidade. Caso o código da oportunidade não exista no BD, retornar essa informação;
-- **ListaOportunidades**: deve ser recebido o código do cargo e retornar uma lista contendo as oportunidades para aquele cargo;
-- **ListaAbertas**: deve ser recebido o tipo de oportunidade (ou nenhum tipo, indicando que são todos) e retornar as oportunidades em aberto para aquele tipo;
+- **Adiciona**: adds an opportunity to the database;
+- **Altera**: changes an opportunity to database;
+- **Excluir**: deletes an opportunity from database; 
+- **Consulta**: returns data for an opportunity;
+- **ListaOportunidades**: receives the post/job code and returns a list containing the opportunities for that post/job;
+- **ListaAbertas**: receives the type of opportunity (or no type, indicating all types) and return the open opportunities for that type.
 
-Os servidores/serviços ao receberem uma solicitação de inclusão de oportunidade preenchem automaticamente o campo 'ingresso' com a data e hora de recebimento da solicitação no servidor/serviço. 
+Observations:
 
-O servidor que se comunica com socket UDP suporta apenas mensagens de até 100 caracteres e não suporta as operações de ListaOportunidades e ListaAbertas. 
+When servers/services receive an opportunity inclusion request, they automatically fill in field ```ingresso``` with date and time the request was received at server/service.
 
-O servidor que se comunica por TCP possui uma interface com o usuário em modo texto, permitindo acesso aos funcionários da URSA para interagir com as oportunidades, a partir das operações previstas. Além disso, tanto ele quanto o servidor que se comunica com socket TCP constroi um log de processamento das operações realizadas.
+The server that communicates with a UDP socket, only supports messages of up to 100 characters and doesn't support the operations *ListaOportunidades* and *ListaAbertas*.
+
+The server that communicates via TCP has a user interface in text mode, allowing URSA employees access to interact with opportunities, based on the planned operations. In addition, both it and the server that communicates with a TCP socket build a processing log of operations performed.
+
 
 ## Web Services:
 
-Os serviços Web disponibilizam o acesso as mesmas operações que o servidor TCP. No caso de serviços Rest, são implementadas operações em quatro métodos HTTP: GET, PUT, POST e DELETE. A codificação dos dados é XML em SOAP e Json em Rest.
+Web services provide access to the same operations as TCP server. In case of Rest services, operations are implemented in four HTTP methods: GET, PUT, POST and DELETE. The data encoding is **XML** in SOAP and **Json** in Rest.
 
-O trabalho contêm com os seguintes clientes:
+The project contain the following clients:
 
-- **Cliente com interface de linha de comando para servidor UDP**: a aplicação recebe os argumentos em linha de comando, envia a mensagem de solicitação ao servidor, aguarda a resposta e mostra ao usuário. As opções disponíveis são as mesmas que o servidor disponibiliza;
-- **Cliente com interface gráfica para interação com Serviço Web SOAP**: proporciona acesso a todas as operações disponibilizadas pelo Serviço SOAP;
-- **Cliente Web para interação com o Serviço Web Rest**: a aplicação proporciona acesso a todas as operações disponibilizadas pelo serviço com uma interface Web. 
+- **Client with command line interface for UDP server**: the application receives the arguments in command line, sends the request message to server, waits for response and shows to the user. The available options are the same as those available on server;
+- **Client with graphical interface for interaction with SOAP Web Service**: provides access to all operations made available by the SOAP Service;
+- **Web client for interaction with the Rest Web Service**: the application provides access to all operations provided by the service with a web interface.
 
 ## URSA Story
 
-A Universidade Regionalizada Salvador da América (URSA) é uma das maiores universidades de sua região. A região de abrangência da URSA compreende uma área essencialmente agrícola, com muitos produtores agropecuários de pequeno, grande e médio porte. Mesmo sendo agrícola, a região é muito bem servida de serviços de tecnologia da informação e comunicação, com grande conectividade e acesso indiscriminado por moradores e empresários a dispositivos computacionais de vários tipos. 
+The *Universidade Regionalizada Salvador da América* (URSA) is one of the largest universities in its region. The region covered by URSA comprises an essentially agricultural area, with many small, large and medium-sized agricultural producers. Even though it is agricultural, the region is very well served by information and communication technology services, with great connectivity and indiscriminate access by residents and businessmen to computing devices of various types. 
 
-A URSA oferece diversos cursos de graduação aos moradores da região, dentre eles, os cursos de Agronomia, Engenharia Agronômica e Agronegócios (CST). Constantemente os produtores e as empresas da área agrícola entram em contato com os coordenadores da URSA para solicitar a indicação ou divulgar vagas de oportunidades: empregos, estágios ou bolsas (pesquisa, extensão ou desenvolvimento). As formas de chegada das oportunidades são tantas que os coordenadores e funcionários da URSA estão com problemas para gerenciar e divulgar essas oportunidades. 
+URSA offers several undergraduate courses to residents of the region, including Agronomy, Agronomic Engineering and Agribusiness (CST) courses. Producers and companies in the agricultural area are constantly in contact with URSA coordinators to request nominations or advertise opportunities: jobs, internships or scholarships (research, extension or development). There are so many ways in which opportunities are available that URSA coordinators and employees are having trouble managing and disseminating these opportunities.
 
 #### This was an assignment for Distributed Systems class by Ph.D Marcelo Trindade Rebonatto at Passo Fundo University (2017-2).
